@@ -146,6 +146,14 @@ class HMDevice(Entity):
                         channel = channels[0]
                     else:
                         channel = self._channel
+                    # HACK
+                    types_to_hack = ["HmIP-BBL", "HmIP-FBL"]
+                    if self._interface == "hmip" and (
+                        self._hmdevice._TYPE in types_to_hack
+                        or self._hmdevice._PARENT_TYPE in types_to_hack
+                    ):
+                        channel = 3
+                    # HACK END
                     # Remember the channel for this attribute to ignore invalid events later
                     self._channel_map.add(f"{node}:{channel!s}")
 
